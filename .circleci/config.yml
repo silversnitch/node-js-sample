@@ -14,7 +14,7 @@ jobs:
             docker run -p 8080:8080 -d dotenet-docker
             sleep 2
             curl -I localhost:8080 | grep "200 OK"
-  publish: 
+  deploy: 
     machine:
       image: "ubuntu-1604:202004-01"
     steps: 
@@ -25,3 +25,11 @@ jobs:
             docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
             docker tag dotenet-docker silversnitch/dotenet-docker
             docker push silversnitch/dotenet-docker
+
+workflows:
+  executor:
+    jobs:
+      - build
+      - publish:
+          requires:
+            - build
