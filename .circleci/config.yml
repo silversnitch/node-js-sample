@@ -3,17 +3,23 @@ version: 2.1
 
 jobs:
   build:
-    docker:
-      - image: circleci/node
+    machine:
+      image: "ubuntu-1604:202004-01"
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Build Docker client
           command: |
             docker build . -t dotenet-docker
-            echo 'bonjour'
-      - deploy: 
+            docker run -p 8080:8080 -d dotenet-docker
+            sleep 2
+            curl -I localhost:8080 | grep "200 OK"
+  publish: 
+    machine:
+      image: "ubuntu-1604:202004-01"
+    steps: 
+      - checkout
+      - run:
           name: Push application Docker image
           command: |
             docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
