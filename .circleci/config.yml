@@ -23,8 +23,8 @@ jobs:
           name: Push application Docker image
           command: |
             docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
-            docker build -t . $DOCKERHUB_LOGIN/nodejs-docker
-            docker push $DOCKERHUB_LOGIN/nodejs-docker
+            docker build -t silversnitch/nodejs-docker .
+            docker push silversnitch/nodejs-docker
 
 workflows:
   executor:
