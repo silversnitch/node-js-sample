@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Build Docker client
           command: |
-            docker build -t dotenet-docker
+            docker build . -t dotenet-docker
             echo 'bonjour'
       - deploy: 
           name: Push application Docker image
