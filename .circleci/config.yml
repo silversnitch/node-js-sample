@@ -10,8 +10,8 @@ jobs:
       - run:
           name: Build Docker client and test client
           command: |
-            docker build . -t dotenet-docker
-            docker run -p 8080:8080 -d dotenet-docker
+            docker build . -t nodejs-docker
+            docker run -p 8080:8080 -d nodejs-docker
             sleep 2
             curl -I localhost:8080 | grep "200 OK"
   deploy: 
@@ -23,8 +23,8 @@ jobs:
           name: Push application Docker image
           command: |
             docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
-            docker tag dotenet-docker silversnitch/dotenet-docker
-            docker push silversnitch/dotenet-docker
+            docker build . -t $DOCKER_LOGIN/nodejs-docker
+            docker push $DOCKERHUB_LOGIN/nodejs-docker
 
 workflows:
   executor:
